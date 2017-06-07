@@ -1,0 +1,3 @@
+package RabbitMop;
+
+1;
