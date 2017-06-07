@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  	<title>RabbitMop: <%= $title %></title>
+  	<link rel="stylesheet" type="text/css" href="css/default.css" />
+  </head>
+  <body>
+    % if (my $confirmation = flash 'confirmation') {
+      <p><%= $confirmation %></p>
+    % }
+    <%= content %>
+
+    <p>Copyright(c) 2017 Michael D. Stemle, Jr., see LICENSE file for details.</p>
+  </body>
+</html>

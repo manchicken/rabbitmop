@@ -1,0 +1,38 @@
+% layout "default";
+% title "Welcome";
+
+<h1 data-test="welcome-header">Welcome to RabbitMop!</h1>
+%= form_for 'auth' => (method => q{POST}) => begin
+
+%= csrf_field
+
+<%= t span => (class=>'field') => begin %>
+%= label_for host => 'Host: '
+%= text_field 'host'
+<% end %>
+
+<%= t span => (class=>'field') => begin %>
+%= label_for port => 'Port: '
+%= number_field 'port' => 5672
+<% end %>
+
+<%= t span => (class=>'field') => begin %>
+%= label_for vhost => 'vhost: '
+%= text_field label=>'vhost', name=>'vhost', default=>'/'
+<% end %>
+
+<%= t span => (class=>'field') => begin %>
+%= label_for username => 'User Name: '
+%= text_field 'username' => ''
+<% end %>
+
+<%= t span => (class=>'field') => begin %>
+%= label_for password => 'Password: '
+%= password_field 'password'
+<% end %>
+
+<%= t span => (class=>'field') => begin %>
+%= submit_button
+<% end %>
+
+% end
