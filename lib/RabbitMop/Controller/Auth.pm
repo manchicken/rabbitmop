@@ -2,6 +2,7 @@ package RabbitMop::Controller::Auth;
 use Mojo::Base 'Mojolicious::Controller';
 
 use RabbitMop::UserContext;
+use Net::AMQP::RabbitMQ;
 
 # Attempt AMQP authentication. If this works, redirect to the menu.
 # Otherwise go back to the start#welcome
@@ -35,7 +36,25 @@ sub attempt {
   	params=>$self->req->params->to_hash
   });
   $self->session('uctx', $uctx);
-	return $self->redirect_to(controller=>'action-menu', action=>'welcome');
+
+  my $is_connected = undef;
+  eval {
+	  my $mq = Net::AMQP::RabbitMQ->new();
+	  $mq->connect($self->req->param('host'), {
+	  	user     => $self->req->param('username'),
+	  	password => $self->req->param('password'),
+	  	port     => $self->req->param('port') || 5672,
+	  	vhost    => $self->req->param('vhost') || '/',
+		});
+		$mq->disconnect()
+	};
+
+	if ($@) {
+		$self->flash(error => $@);
+  	return $self->redirect_to('/', $self->req->params);
+	}
+
+	return $self->redirect_to('/actions', is_connected => $is_connected);
 }
 
 1;

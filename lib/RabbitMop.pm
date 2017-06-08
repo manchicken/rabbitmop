@@ -21,6 +21,7 @@ sub establish_routes {
   # Normal route to controller
   $r->get('/')->to('start#welcome');
   $r->post('/auth')->to('auth#attempt');
+  $r->get('/actions')->to(controller=>'ActionMenu', action=>'welcome');
 
   return;
 }

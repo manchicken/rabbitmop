@@ -16,3 +16,8 @@ body {
 	color: red;
 	font-weight: bolder;
 }
+
+.content-regex {
+	width: 40em;
+	height: 20em;
+}

@@ -1,0 +1,20 @@
+% layout "default";
+% title "Actions";
+
+%= t h1 => ('data-test' => 'find-messages-header') => 'Find some messages'
+
+%= form_for 'action' => (method => q{POST}) => begin
+
+%= csrf_field
+
+<%= t span => (class=>'field') => begin %>
+%= label_for host => 'Context Regex:'
+%= t 'br'
+%= text_area 'content_regex' => (class=>'content-regex')
+<% end %>
+
+<%= t span => (class=>'field') => begin %>
+%= submit_button
+<% end %>
+
+% end

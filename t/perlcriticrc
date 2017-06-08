@@ -2,3 +2,6 @@ severity  = 3
 color     = 1
 criticism-fatal = 1
 pager     = less
+
+[Variables::ProhibitPackageVars]
+packages = Data::Dumper File::Find FindBin Log::Log4perl Test::Builder

@@ -8,6 +8,9 @@
     % if (my $confirmation = flash 'confirmation') {
       <p><%= $confirmation %></p>
     % }
+    % if (my $error = flash 'error') {
+      <p class="error-message"><%= $error %></p>
+    % }
     <%= content %>
 
     <p>Copyright(c) 2017 Michael D. Stemle, Jr., see LICENSE file for details.</p>
