@@ -1,5 +1,14 @@
 % layout "default";
 % title "Welcome";
+% my $sock_url = url_for 'txn';
+% content_for headtag => begin
+<script type="text/javascript">
+	document.onreadystatechange = () => {
+		if (document.readyState !== 'interactive') return
+		queue.queue(() => iface.connect('<%= $sock_url->to_abs %>'))
+	}
+</script>
+% end
 
 %= t h1 => ('data-test' => 'welcome-header') => 'Welcome to RabbitMop!'
 %= form_for 'auth' => (method => q{POST}) => begin
@@ -8,31 +17,35 @@
 
 <%= t span => (class=>'field') => begin %>
 %= label_for host => 'Host: '
-%= text_field 'host'
+%= text_field 'host' => 'localhost' => (id=>'field.host')
 <% end %>
 
 <%= t span => (class=>'field') => begin %>
 %= label_for port => 'Port: '
-%= number_field port => 5672
+%= number_field port => 5672 => (id=>'field.port')
 <% end %>
 
 <%= t span => (class=>'field') => begin %>
 %= label_for vhost => 'vhost: '
-%= text_field vhost =>'/'
+%= text_field vhost =>'/' => (id=>'field.vhost')
 <% end %>
 
 <%= t span => (class=>'field') => begin %>
 %= label_for username => 'User Name: '
-%= text_field username => ''
+%= text_field username => 'guest' => (id=>'field.username')
 <% end %>
 
 <%= t span => (class=>'field') => begin %>
 %= label_for password => 'Password: '
-%= password_field 'password'
+%= password_field 'password' => (id=>'field.password', value=>'guest')
 <% end %>
 
 <%= t span => (class=>'field') => begin %>
-%= submit_button
+<%= input_tag 'button.auth' => (
+	value=>'Authenticate',
+	type=>'button',
+	onclick=>"ui.authenticate()"
+	)%>
 <% end %>
 
 % end

@@ -23,6 +23,9 @@ sub establish_routes {
   $r->post('/auth')->to('auth#attempt');
   $r->get('/actions')->to(controller=>'ActionMenu', action=>'welcome');
 
+  # WebSockets here
+  $r->websocket('/txn')->to('rabbit#socket');
+
   return;
 }
 

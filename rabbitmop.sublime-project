@@ -1,0 +1,21 @@
+{
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	],
+	"build_systems":
+	[
+		{
+			"name": "prove",
+			"shell_cmd": "prove -lv",
+	    "working_dir": "${project_path}"
+		},
+		{
+			"name": "morbo",
+			"shell_cmd": "morbo -w . ./script/rabbitmop",
+	    "working_dir": "${project_path}"
+		}
+	]
+}

@@ -30,22 +30,28 @@ sub attempt {
   	return $self->render(controller=>'start', action=>'welcome');
   }
 
+  # Prep the args for the connect...
+  my @conn_args = (
+		$self->req->param('host'),
+		{
+	  	user     => $self->req->param('username'),
+	  	password => $self->req->param('password'),
+	  	port     => $self->req->param('port') || 5672,
+	  	vhost    => $self->req->param('vhost') || '/',
+		}
+  );
+
   # Store context and go to the menu
   my $uctx = RabbitMop::UserContext->new();
   $uctx->set_context_for_action('auth#attempt', {
   	params=>$self->req->params->to_hash
   });
+  $uctx->set_context_for_action('auth#attempt:params', \@conn_args);
   $self->session('uctx', $uctx);
 
-  my $is_connected = undef;
   eval {
 	  my $mq = Net::AMQP::RabbitMQ->new();
-	  $mq->connect($self->req->param('host'), {
-	  	user     => $self->req->param('username'),
-	  	password => $self->req->param('password'),
-	  	port     => $self->req->param('port') || 5672,
-	  	vhost    => $self->req->param('vhost') || '/',
-		});
+	  $mq->connect(@conn_args);
 		$mq->disconnect()
 	};
 
@@ -54,7 +60,7 @@ sub attempt {
   	return $self->redirect_to('/', $self->req->params);
 	}
 
-	return $self->redirect_to('/actions', is_connected => $is_connected);
+	return $self->redirect_to('/actions');
 }
 
 1;

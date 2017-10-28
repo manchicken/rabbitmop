@@ -3,6 +3,8 @@
   <head>
   	<title>RabbitMop: <%= $title %></title>
   	<link rel="stylesheet" type="text/css" href="css/default.css" />
+    <script src="js/rabbit-interface.js" type="text/javascript"></script>
+    <%= content 'headtag' %>
   </head>
   <body>
     % if (my $confirmation = flash 'confirmation') {

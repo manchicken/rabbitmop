@@ -14,7 +14,7 @@
 <% end %>
 
 <%= t span => (class=>'field') => begin %>
-%= submit_button
+%= submit_button => onclick=>'ui.connect()'
 <% end %>
 
 % end
